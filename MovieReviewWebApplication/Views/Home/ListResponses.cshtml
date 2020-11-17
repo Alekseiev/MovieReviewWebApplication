@@ -1,0 +1,34 @@
+﻿@model IEnumerable<MovieReviewWebApplication.Models.GuestResponse>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="Width=Display-Width" />
+    <title>Responses</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div class="text-center p-2">
+        <h2>Here is a list of people attending the party</h2>
+        <table class="table table-bordered table-striped table-sm">
+            <thead>
+                <tr><th>Name</th><th>Email</th><th>Phone</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var guest in Model)
+                {
+                    <tr>
+                        <td>@guest.Name</td>
+                        <td>@guest.Email</td>
+                        <td>@guest.Phone</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

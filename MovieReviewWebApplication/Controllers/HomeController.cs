@@ -1,37 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MovieReviewWebApplication.Models;
+
 
 namespace MovieReviewWebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public ActionResult Index()
         {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
+            return View();
+        }  
+        
+        [HttpGet]
+        public ViewResult RsvpForm()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public ActionResult RsvpForm(GuestResponse guestResponse)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+            Repository.AddResponse(guestResponse);
+            return View("Thanks", guestResponse);
+            }
+            else
+            {
+                return View();
+            }
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public ActionResult ListResponses()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(Repository.Responses.Where(guest => guest.WillAttend == true));
         }
     }
 }
