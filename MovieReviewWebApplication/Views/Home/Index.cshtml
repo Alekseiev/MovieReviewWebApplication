@@ -1,22 +1,12 @@
-﻿@{
-    Layout = null;
+﻿@model MoviesListViewModel
+
+@foreach (var movie in Model.Movies)
+{
+    <div>
+        <h3>@movie.Name</h3>
+        @movie.Description
+        <h4>@movie.Genre</h4>
+    </div>
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=devise-width" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <title>Movie review</title>
-</head>
-<body>
-
-    <div class="text-center">
-        <h3>We're going to have an exciting party!</h3>
-        <h4>And YOU are invited!</h4>
-        <a class="btn btn-primary" asp-action="RsvpForm">Rsvp Now</a>
-    </div>
-</body>
-</html>
-
+<div page-model="@Model.PagingInfo" page-action="Index"></div>

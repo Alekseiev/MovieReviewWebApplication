@@ -1,41 +1,37 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using MovieReviewWebApplication.Models;
+using MovieReviewWebApplication.Models.ViewModels;
 
 
-namespace MovieReviewWebApplication.Controllers
+namespace PracticeWebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private IMovieRepository repository;
+        public int PageSize = 4;
+
+        public HomeController(IMovieRepository repository)
         {
-            return View();
-        }  
-        
-        [HttpGet]
-        public ViewResult RsvpForm()
-        {
-            return View();
+            this.repository = repository;
         }
 
-        [HttpPost]
-        public ActionResult RsvpForm(GuestResponse guestResponse)
-        {
-            if (ModelState.IsValid)
+        public ViewResult Index(int moviePage = 1)
+            => View(new MoviesListViewModel
             {
-            Repository.AddResponse(guestResponse);
-            return View("Thanks", guestResponse);
-            }
-            else
-            {
-                return View();
-            }
-        }
-
-        public ActionResult ListResponses()
-        {
-            return View(Repository.Responses.Where(guest => guest.WillAttend == true));
-        }
+                Movies = repository.Movies
+                    .OrderBy(movie => movie.MovieId)
+                    .Skip((moviePage - 1) * PageSize)
+                    .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = moviePage,
+                    ItemsPerPage = PageSize,
+                    TotalItems = repository.Movies.Count()
+                }
+            });
     }
 }
