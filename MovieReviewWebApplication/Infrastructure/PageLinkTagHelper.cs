@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using MovieReviewWebApplication.Models.ViewModels;
+using System.Collections.Generic;
 
 namespace MovieReviewWebApplication.Infrastructure
 {
@@ -25,6 +26,10 @@ namespace MovieReviewWebApplication.Infrastructure
 
         public string PageAction { get; set; }
 
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; }
+            = new Dictionary<string, object>();
+
         public bool PageClassesEnabled { get; set; } = false;
         public string PageClass { get; set; }
         public string PageClassNormal { get; set; }
@@ -38,8 +43,8 @@ namespace MovieReviewWebApplication.Infrastructure
             for (int i = 1; i <= PageModel.TotalPages; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
-                tag.Attributes["href"] = urlHelper.Action(PageAction,
-                new { moviePage = i });
+                PageUrlValues["moviePage"] = i;
+                tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                 if (PageClassesEnabled)
                 {
                     tag.AddCssClass(PageClass);
@@ -52,4 +57,4 @@ namespace MovieReviewWebApplication.Infrastructure
             output.Content.AppendHtml(result.InnerHtml);
         }
     }
-}   
+}

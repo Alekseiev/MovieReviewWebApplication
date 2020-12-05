@@ -19,10 +19,11 @@ namespace PracticeWebApplication.Controllers
             this.repository = repository;
         }
 
-        public ViewResult Index(int moviePage = 1)
+        public ViewResult Index(string category, int moviePage = 1)
             => View(new MoviesListViewModel
             {
                 Movies = repository.Movies
+                .Where(movie => category == null || movie.Genre == category)
                     .OrderBy(movie => movie.MovieId)
                     .Skip((moviePage - 1) * PageSize)
                     .Take(PageSize),
@@ -30,8 +31,12 @@ namespace PracticeWebApplication.Controllers
                 {
                     CurrentPage = moviePage,
                     ItemsPerPage = PageSize,
-                    TotalItems = repository.Movies.Count()
-                }
+                    TotalItems = category == null ?
+                        repository.Movies.Count() :
+                        repository.Movies.Where(movie =>
+                        movie.Genre == category).Count()
+                },
+                CurrentCategory = category
             });
     }
 }

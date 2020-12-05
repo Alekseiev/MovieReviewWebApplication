@@ -23,7 +23,8 @@ namespace MovieReviewWebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<MovieDbContext>(opts => {
+            services.AddDbContext<MovieDbContext>(opts =>
+            {
                 opts.UseSqlServer(
                 Configuration["ConnectionStrings:MovieReviewConnection"]);
             });
@@ -35,14 +36,25 @@ namespace MovieReviewWebApplication
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseEndpoints(endpoints => {
-                endpoints.MapControllerRoute("pagination",
-                    "Movies/Page{moviePage}",
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("catpage",
+                    "{category}/Page{moviePage:int}",
                     new { Controller = "Home", action = "Index" });
+
+                endpoints.MapControllerRoute("page", "Page{moviePage:int}",
+                    new { Controller = "Home", action = "Index", moviePage = 1 });
+
+                endpoints.MapControllerRoute("category", "{category}",
+                    new { Controller = "Home", action = "Index", moviePage = 1 });
+
+                endpoints.MapControllerRoute("pagination",
+                    "Movie/Page{moviePage}",
+                    new { Controller = "Home", action = "Index", moviePage = 1 });
+                
                 endpoints.MapDefaultControllerRoute();
             });
             SeedData.EnsurePopulated(app);
         }
     }
 }
-        
