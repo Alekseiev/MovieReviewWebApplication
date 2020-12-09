@@ -9,7 +9,7 @@ using MovieReviewWebApplication.Models;
 namespace MovieReviewWebApplication.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20201203174155_Initial")]
+    [Migration("20201209170135_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,9 @@ namespace MovieReviewWebApplication.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(8,2)");
 
                     b.HasKey("MovieId");
 

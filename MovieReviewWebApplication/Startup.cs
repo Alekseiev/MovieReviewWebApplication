@@ -29,13 +29,18 @@ namespace MovieReviewWebApplication
                 Configuration["ConnectionStrings:MovieReviewConnection"]);
             });
             services.AddScoped<IMovieRepository, EFMovieRepository>();
+            services.AddRazorPages();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
+            app.UseSession();
             app.UseStaticFiles();
             app.UseRouting();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("catpage",
@@ -53,6 +58,7 @@ namespace MovieReviewWebApplication
                     new { Controller = "Home", action = "Index", moviePage = 1 });
                 
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
             });
             SeedData.EnsurePopulated(app);
         }

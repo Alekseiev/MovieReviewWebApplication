@@ -19,106 +19,123 @@ namespace MovieReviewWebApplication.Models
 
             if (!context.Movies.Any())
             {
-                context.Movies.AddRange(                    
+                context.Movies.AddRange(
                     new Movie
                     {
                         Name = "Inception",
                         Description = "Description",
-                        Genre = "Action"
+                        Genre = "Action",
+                        Price = 10
                     },
                     new Movie
                     {
                         Name = "Inception",
                         Description = "Description",
-                        Genre = "Action"
+                        Genre = "Action",
+                        Price = 10
                     },
                     new Movie
                     {
                         Name = "Inception",
                         Description = "Description",
-                        Genre = "Action"
+                        Genre = "Action",
+                        Price = 10
                     },
                     new Movie
                     {
                         Name = "Inception",
                         Description = "Description",
-                        Genre = "Action"
+                        Genre = "Action",
+                        Price = 10
                     },
                     new Movie
                     {
                         Name = "Inception",
                         Description = "Description",
-                        Genre = "Action"
+                        Genre = "Action",
+                        Price = 10
                     },
                     new Movie
                     {
                         Name = "Inception",
                         Description = "Description",
-                        Genre = "Action"
+                        Genre = "Action",
+                        Price = 10
                     },
                     new Movie
                     {
                         Name = "Inception",
                         Description = "Description",
-                        Genre = "Action"
+                        Genre = "Action",
+                        Price = 10
                     },
                     new Movie
                     {
                         Name = "DeadPool",
                         Description = "Description",
-                        Genre = "Comedy"
+                        Genre = "Comedy",
+                        Price = 15
                     }, new Movie
                     {
                         Name = "DeadPool",
                         Description = "Description",
-                        Genre = "Comedy"
+                        Genre = "Comedy",
+                        Price = 15
                     },
                     new Movie
                     {
                         Name = "DeadPool",
                         Description = "Description",
-                        Genre = "Comedy"
+                        Genre = "Comedy",
+                        Price = 15
                     },
                     new Movie
                     {
                         Name = "DeadPool",
                         Description = "Description",
-                        Genre = "Comedy"
+                        Genre = "Comedy",
+                        Price = 15
                     },
                     new Movie
                     {
                         Name = "DeadPool",
                         Description = "Description",
-                        Genre = "Comedy"
+                        Genre = "Comedy",
+                        Price = 15
                     },
                     new Movie
                     {
                         Name = "Chernobyl",
                         Description = "Description",
-                        Genre = "Drama"
+                        Genre = "Drama",
+                        Price = 20
                     },
                     new Movie
                     {
                         Name = "Chernobyl",
                         Description = "Description",
-                        Genre = "Drama"
+                        Genre = "Drama",
+                        Price = 20
                     },
                     new Movie
                     {
                         Name = "Transcendence",
                         Description = "Description",
-                        Genre = "science fiction"
+                        Genre = "science fiction",
+                        Price = 25
                     },
                     new Movie
                     {
                         Name = "Transcendence",
                         Description = "Description",
-                        Genre = "science fiction"
+                        Genre = "science fiction",
+                        Price = 25
                     }, new Movie
                     {
                         Name = "Transcendence",
                         Description = "Description",
-                        Genre = "science fiction"
+                        Genre = "science fiction",
+                        Price = 25
                     }
 
                     );
@@ -127,5 +144,5 @@ namespace MovieReviewWebApplication.Models
         }
     }
 }
-    
+
 
