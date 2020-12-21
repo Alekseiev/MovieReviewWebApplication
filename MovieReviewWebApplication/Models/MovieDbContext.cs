@@ -8,5 +8,6 @@ namespace MovieReviewWebApplication.Models
             : base(options) { }
 
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

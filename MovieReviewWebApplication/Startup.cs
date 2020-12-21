@@ -29,6 +29,7 @@ namespace MovieReviewWebApplication
                 Configuration["ConnectionStrings:MovieReviewConnection"]);
             });
             services.AddScoped<IMovieRepository, EFMovieRepository>();
+            services.AddScoped<IOrderRepository, EFOrderRepository>();
             services.AddRazorPages();
             services.AddDistributedMemoryCache();
             services.AddSession();
