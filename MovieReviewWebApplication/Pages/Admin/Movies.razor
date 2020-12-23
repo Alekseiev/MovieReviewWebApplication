@@ -1,0 +1,73 @@
+﻿@page "/admin/movies"
+@page "/admin"
+@inherits OwningComponentBase<IMovieRepository>
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Price</th>
+            <td />
+        </tr>
+    </thead>
+    <tbody>
+        @if (MovieData?.Count() > 0)
+        {
+            @foreach (Movie movie in MovieData)
+            {
+                <tr>
+                    <td>@movie.MovieId</td>
+                    <td>@movie.Name</td>
+                    <td>@movie.Genre</td>
+                    <td>@movie.Price.ToString("c")</td>
+                    <td>
+                        <NavLink class="btn btn-info btn-sm"
+                                 href="@GetDetailsUrl(movie.MovieId)">
+                            Details
+                        </NavLink>
+                        <NavLink class="btn btn-warning btn-sm"
+                                 href="@GetEditUrl(movie.MovieId)">
+                            Edit
+                        </NavLink>
+                        <button class="btn btn-danger btn-sm"
+                                @onclick="@(e => DeleteMovie(movie))">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No Movies</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<NavLink class="btn btn-primary" href="/admin/movies/create">Create</NavLink>
+
+@code {
+    public IMovieRepository Repository => Service;
+    public IEnumerable<Movie> MovieData { get; set; }
+    protected async override Task OnInitializedAsync()
+
+    {
+        await UpdateData();
+    }
+
+    public async Task UpdateData()
+    {
+        MovieData = await Repository.Movies.ToListAsync();
+    }
+
+    public async Task DeleteMovie(Movie movie)
+    {
+        Repository.DeleteMovie(movie);
+        await UpdateData();
+    }
+
+    public string GetDetailsUrl(long id) => $"/admin/movies/details/{id}";
+    public string GetEditUrl(long id) => $"/admin/movies/edit/{id}";
+}

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace MovieReviewWebApplication.Models
 {
@@ -12,5 +13,22 @@ namespace MovieReviewWebApplication.Models
         }
 
         public IQueryable<Movie> Movies => context.Movies;
+
+        public void CreateMovie(Movie movie)
+        {
+            context.Add(movie);
+            context.SaveChanges();
+        }
+
+        public void DeleteMovie(Movie movie)
+        {
+            context.Movies.Remove(movie);            
+            context.SaveChanges();
+        }
+
+        public void SaveMovie(Movie movie)
+        {
+            context.SaveChanges();
+        }
     }
 }
