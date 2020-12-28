@@ -10,6 +10,6 @@ namespace MovieReviewWebApplication.Models.ViewModels
     {
         public IEnumerable<Movie> Movies { get; set; }
         public PagingInfo PagingInfo { get; set; }
-        public string CurrentCategory { get; set; }
+        public string CurrentCategory { get; set; }        
     }
 }

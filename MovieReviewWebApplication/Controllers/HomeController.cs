@@ -11,16 +11,17 @@ namespace PracticeWebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private IMovieRepository repository;
+        private IMovieRepository repository;        
         public int PageSize = 4;
 
         public HomeController(IMovieRepository repository)
         {
-            this.repository = repository;
+            this.repository = repository;            
         }
 
         public ViewResult Index(string category, int moviePage = 1)
-            => View(new MoviesListViewModel
+        {
+            return View(new MoviesListViewModel
             {
                 Movies = repository.Movies
                 .Where(movie => category == null || movie.Genre == category)
@@ -38,5 +39,6 @@ namespace PracticeWebApplication.Controllers
                 },
                 CurrentCategory = category
             });
+        }
     }
 }

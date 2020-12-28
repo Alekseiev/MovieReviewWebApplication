@@ -12,7 +12,8 @@ namespace MovieReviewWebApplication.Models
             this.context = context;
         }
 
-        public IQueryable<Movie> Movies => context.Movies;
+        public IQueryable<Movie> Movies => context.Movies
+            .Include(m => m.Genres);
 
         public void CreateMovie(Movie movie)
         {

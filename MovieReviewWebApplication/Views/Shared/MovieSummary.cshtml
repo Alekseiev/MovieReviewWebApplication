@@ -1,4 +1,4 @@
-﻿@model Movie
+﻿@model Movie 
 
 <div class="card card-outline-primary m-1 p-1">
     <div class="bg-faded p-1">
@@ -14,7 +14,11 @@
         <input type="hidden" name="returnUrl"
                value="@ViewContext.HttpContext.Request.PathAndQuary()" />
         <span class="card-text p-1">
-                @Model.Description            
+            @Model.Description
+            @foreach (var genre in Model.Genres)
+            {
+                <span>@genre.Name</span>
+            }
             <button type="submit"
                     class="btn btn-success btn-sm pull-right" style="float:right">
                 Add To Cart

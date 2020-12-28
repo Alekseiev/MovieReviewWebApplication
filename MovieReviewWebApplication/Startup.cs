@@ -31,6 +31,7 @@ namespace MovieReviewWebApplication
             });
             services.AddScoped<IMovieRepository, EFMovieRepository>();
             services.AddScoped<IOrderRepository, EFOrderRepository>();
+            services.AddScoped<IGenreRepository, EFGenreRepository>();
             services.AddRazorPages();
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -80,6 +81,7 @@ namespace MovieReviewWebApplication
 
             SeedData.EnsurePopulated(app);
             IdentitySeedData.EnsurePopulated(app);
+            GenreSeedData.EnsurePopulated(app);            
         }
     }
 }

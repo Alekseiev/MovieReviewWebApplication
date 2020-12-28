@@ -8,9 +8,9 @@
     }
 </style>
 <h3 class="bg-@ThemeColor text-white text-center p-1">@TitleText a Movie</h3>
-<EditForm Model="Movie" OnValidSubmit="SaveMovie">
+<EditForm Model="Movie"  OnValidSubmit="SaveMovie">
     <DataAnnotationsValidator />
-    @if (Movie.MovieId!= 0)
+    @if (Movie.MovieId != 0)
     {
         <div class="form-group">
             <label>ID</label>

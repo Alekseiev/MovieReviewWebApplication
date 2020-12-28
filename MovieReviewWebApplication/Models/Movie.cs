@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace MovieReviewWebApplication.Models
 {
     public class Movie
     {
         public long MovieId { get; set; }
-
-
 
         [Required(ErrorMessage = "Please, enter a movie name")]
         public string Name { get; set; }
@@ -23,5 +22,9 @@ namespace MovieReviewWebApplication.Models
             ErrorMessage = "Please, enter a positive price")]
         [Column(TypeName = "decimal(8, 2)")]
         public decimal Price { get; set; }
+
+        public List<Genre> Genres { get; set; } = new List<Genre>();
+
+
     }
 }

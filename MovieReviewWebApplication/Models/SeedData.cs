@@ -17,6 +17,18 @@ namespace MovieReviewWebApplication.Models
                 context.Database.Migrate();
             }
 
+            //Genre action = new Genre { Name = "Action" };
+            //Genre drama = new Genre { Name = "Drama" };
+            //context.Genres.AddRange(action, drama);
+
+            //Movie inception = new Movie { Name = "Inception", Genre = "", Description = "", Price = 10m };
+            //context.Movies.Add(inception);
+
+            //inception.Genres.Add(action);
+            //inception.Genres.Add(drama);
+            //context.SaveChanges();
+            
+
             if (!context.Movies.Any())
             {
                 context.Movies.AddRange(
@@ -25,7 +37,7 @@ namespace MovieReviewWebApplication.Models
                         Name = "Inception",
                         Description = "Description",
                         Genre = "Action",
-                        Price = 10
+                        Price = 10                        
                     },
                     new Movie
                     {
@@ -136,10 +148,10 @@ namespace MovieReviewWebApplication.Models
                         Description = "Description",
                         Genre = "science fiction",
                         Price = 25
-                    }
-
-                    );
+                    });
                 context.SaveChanges();
+
+                
             }
         }
     }
