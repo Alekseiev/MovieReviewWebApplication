@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MovieReviewWebApplication.Infrastructure;
 using MovieReviewWebApplication.Models;
 using System.Linq;
 
@@ -20,14 +19,14 @@ namespace MovieReviewWebApplication.Pages
 
         public void OnGet(string returnUrl)
         {
-            ReturnUrl = returnUrl ?? "/";            
+            ReturnUrl = returnUrl ?? "/";
         }
 
         public IActionResult OnPost(long movieId, string returnUrl)
         {
             Movie movie = repository.Movies
-                .FirstOrDefault(movie => movie.MovieId == movieId);            
-            Cart.AddItem(movie, 1);            
+                .FirstOrDefault(movie => movie.MovieId == movieId);
+            Cart.AddItem(movie, 1);
             return RedirectToPage(new { returnUrl = returnUrl });
         }
 

@@ -1,6 +1,8 @@
 ﻿@page "/admin/movies/edit/{id:long}"
 @page "/admin/movies/create"
 @inherits OwningComponentBase<IMovieRepository>
+@inject IGenreRepository genreRepository
+
 <style>
     div.validation-message {
         color: rgb(220, 53, 69);
@@ -8,13 +10,20 @@
     }
 </style>
 <h3 class="bg-@ThemeColor text-white text-center p-1">@TitleText a Movie</h3>
-<EditForm Model="Movie"  OnValidSubmit="SaveMovie">
+<EditForm Model="Movie" OnValidSubmit="SaveMovie">
     <DataAnnotationsValidator />
     @if (Movie.MovieId != 0)
     {
         <div class="form-group">
             <label>ID</label>
             <input class="form-control" disabled value="@Movie.MovieId" />
+        </div>
+    }
+    @if (Movie.Rating != 0)
+    {
+        <div class="form-group">
+            <label>Rating</label>
+            <input class="form-control" disabled value="@Movie.Rating" />
         </div>
     }
     <div class="form-group">
@@ -27,42 +36,127 @@
         <ValidationMessage For="@(() => Movie.Description)" />
         <InputText class="form-control" @bind-Value="Movie.Description" />
     </div>
+
     <div class="form-group">
-        <label>Genre</label>
-        <ValidationMessage For="@(() => Movie.Genre)" />
-        <InputText class="form-control" @bind-Value="Movie.Genre" />
+        <label>Director</label>
+        <ValidationMessage For="@(() => Movie.Director)" />
+        <InputText class="form-control" @bind-Value="Movie.Director" />
     </div>
+
+    <div class="form-group">
+        <label>Country</label>
+        <ValidationMessage For="@(() => Movie.Country)" />
+        <InputText class="form-control" @bind-Value="Movie.Country" />
+    </div>
+
+    <div class="form-group">
+        <label>Release date</label>
+        <ValidationMessage For="@(() => Movie.Year)" />
+        <InputDate class="form-control" @bind-Value="Movie.Year" />
+    </div>
+
+    <div class="form-group">
+        <label>Image</label>
+        <ValidationMessage For="@(() => Movie.ImageName)" />
+        <InputText class="form-control" @bind-Value="Movie.ImageName" />
+    </div>
+
     <div class="form-group">
         <label>Price</label>
         <ValidationMessage For="@(() => Movie.Price)" />
         <InputNumber class="form-control" @bind-Value="Movie.Price" />
     </div>
+
+
+
+    <div class="form-group">
+        <label>Genres</label>
+        <div>
+            <MultipleSelector Selected="Selected" NoSelected="NotSelected">
+
+            </MultipleSelector>
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-@ThemeColor">Save</button>
     <NavLink class="btn btn-secondary" href="/admin/movies">Cancel</NavLink>
 </EditForm>
 @code {
+    [Inject] public IGenreRepository repository { get; set; }
+    [Inject] public IMovieRepository movieRepository { get; set; }
+
+    [Inject] public NavigationManager NavManager { get; set; }
+
+    [Parameter] public List<Genre> SelectedGenres { get; set; } = new List<Genre>();
+    [Parameter] public List<Genre> NotSelectedGenres { get; set; } = new List<Genre>();
+
+    [Parameter] public long Id { get; set; } = 0;
+
     public IMovieRepository Repository => Service;
-    [Inject]
-    public NavigationManager NavManager { get; set; }
-    [Parameter]
-    public long Id { get; set; } = 0;
     public Movie Movie { get; set; } = new Movie();
+
+    private List<MultipleSelectorModel> Selected = new List<MultipleSelectorModel>();
+    private List<MultipleSelectorModel> NotSelected = new List<MultipleSelectorModel>();
+
+
     protected override void OnParametersSet()
     {
         if (Id != 0)
         {
-            Movie = Repository.Movies.FirstOrDefault(movie => movie.MovieId == Id);
+            Movie = Repository.Movies.Include(genre => genre.Genres).FirstOrDefault(movie => movie.MovieId == Id);
         }
+
+        foreach (var movieGenre in Movie.Genres)
+        {
+            SelectedGenres.Add(movieGenre);
+        }
+        foreach (var genre in genreRepository.Genres)
+        {
+            NotSelectedGenres.Add(genre);
+            foreach (var movieGenre in Movie.Genres)
+            {
+                if (genre.Id == movieGenre.Id)
+                {
+                    NotSelectedGenres.Remove(genre);
+                }
+            }
+        }
+
+        Selected = SelectedGenres.Select(x => new MultipleSelectorModel(x.Id, x.Name)).ToList();
+        NotSelected = NotSelectedGenres.Select(x => new MultipleSelectorModel(x.Id, x.Name)).ToList();
     }
+
     public void SaveMovie()
     {
+        SelectedGenres.Clear();
+        foreach (var newGenre in Selected)
+        {
+            var genres = genreRepository.Genres.FirstOrDefault(genre => genre.Id == newGenre.Key);
+            genres.Movies = null;
+            SelectedGenres.Add(genres);
+        }
+
         if (Id == 0)
         {
+            Movie.CreatedDate = DateTime.Now;
             Repository.CreateMovie(Movie);
+            Movie.Genres.AddRange(SelectedGenres);
+            Repository.SaveMovie(Movie);
         }
         else
         {
-            Repository.SaveMovie(Movie);
+            if (Selected.Count() > 0)
+            {
+                Movie.Genres.Clear();
+                Repository.SaveMovie(Movie);
+                Movie.Genres.AddRange(SelectedGenres);                
+                Repository.SaveMovie(Movie);
+            }
+            else
+            {
+                Movie.Genres.Clear();
+                Repository.SaveMovie(Movie);
+            }
         }
         NavManager.NavigateTo("/admin/movies");
     }

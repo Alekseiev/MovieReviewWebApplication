@@ -3,9 +3,25 @@
 <table class="table table-sm table-bordered table-striped">
     <tbody>
         <tr><th>ID</th><td>@Movie.MovieId</td></tr>
+        <tr><th>Rating</th><td>@Movie.Rating</td></tr>
         <tr><th>Name</th><td>@Movie.Name</td></tr>
         <tr><th>Description</th><td>@Movie.Description</td></tr>
-        <tr><th>Genre</th><td>@Movie.Genre</td></tr>
+        <tr>
+            <th>Genre</th>
+            <td>
+                @foreach (var genre in Movie.Genres)
+                {
+                    <span>@genre.Name</span>
+                    @if (!(Movie.Genres.Last().Name == genre.Name))
+                    {
+                        <span>, </span>
+                    }
+                }
+            </td>
+        </tr>
+        <tr><th>Director</th><td>@Movie.Director</td></tr>
+        <tr><th>Country</th><td>@Movie.Country</td></tr>
+        <tr><th>Release date</th><td>@Movie.Year.Year</td></tr>
         <tr><th>Price</th><td>@Movie.Price.ToString("C")</td></tr>
     </tbody>
 </table>

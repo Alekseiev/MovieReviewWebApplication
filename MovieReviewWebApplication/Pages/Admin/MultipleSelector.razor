@@ -1,0 +1,90 @@
+﻿
+<style>
+    .multiple-selector {
+        display: flex;
+    }
+
+    .selectable-ul {
+        height: 200px;
+        overflow-y: auto;
+        list-style-type: none;
+        width: 170px;
+        padding: 0;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+
+        .selectable-ul li {
+            cursor: pointer;
+            border-bottom: 1px #eee solid;
+            padding: 2px 10px;
+            font-size: 14px;
+        }
+
+            .selectable-ul li:hover {
+                background-color: #08c;
+            }
+
+    .multiple-selector-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 5px;
+    }
+
+        .multiple-selector-buttons button {
+            margin: 5px;
+        }
+</style>
+
+<div class="multiple-selector">
+    <ul class="selectable-ul">
+        @foreach (var item in NoSelected)
+        {
+            <li @onclick="@(() => Select(item))">@item.Value</li>
+        }
+    </ul>
+    <div class="multiple-selector-buttons">
+        <button type="button" @onclick="SelectAll">>></button>
+        <button type="button" @onclick="DeselectAll">@removeAlltext</button>
+    </div>
+    <ul class="selectable-ul">
+        @foreach (var item in Selected)
+        {
+            <li @onclick="@(() => Deselect(item))">@item.Value</li>
+        }
+    </ul>
+</div>
+
+@code{
+    [Parameter]
+    public List<MultipleSelectorModel> NoSelected { get; set; } = new List<MultipleSelectorModel>();
+    [Parameter]
+    public List<MultipleSelectorModel> Selected { get; set; } = new List<MultipleSelectorModel>();
+    private string removeAlltext = "<<";
+
+    private void Select(MultipleSelectorModel item)
+    {
+        NoSelected.Remove(item);
+        Selected.Add(item);
+    }
+
+    private void Deselect(MultipleSelectorModel item)
+    {
+        Selected.Remove(item);
+        NoSelected.Add(item);
+    }
+
+    private void SelectAll()
+    {
+        Selected.AddRange(NoSelected);
+        NoSelected.Clear();
+    }
+
+    private void DeselectAll()
+    {
+        NoSelected.AddRange(Selected);
+        Selected.Clear();
+    }
+
+}

@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using MovieReviewWebApplication.Models;
 
+
 namespace MovieReviewWebApplication
 {
     public class Startup
@@ -72,7 +73,7 @@ namespace MovieReviewWebApplication
                 endpoints.MapControllerRoute("pagination",
                     "Movie/Page{moviePage}",
                     new { Controller = "Home", action = "Index", moviePage = 1 });
-                
+
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
@@ -81,7 +82,7 @@ namespace MovieReviewWebApplication
 
             SeedData.EnsurePopulated(app);
             IdentitySeedData.EnsurePopulated(app);
-            GenreSeedData.EnsurePopulated(app);            
+            GenreSeedData.EnsurePopulated(app);
         }
     }
 }

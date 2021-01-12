@@ -6,7 +6,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Genre</th>
+            <th>Genres</th>
             <th>Price</th>
             <td />
         </tr>
@@ -19,7 +19,16 @@
                 <tr>
                     <td>@movie.MovieId</td>
                     <td>@movie.Name</td>
-                    <td>@movie.Genre</td>
+                    <td>
+                        @foreach (var genre in movie.Genres)
+                        {
+                            <span>@genre.Name</span>
+                            @if (!(movie.Genres.Last().Name == genre.Name))
+                            {
+                                <span>, </span>
+                            }
+                        }
+                    </td>
                     <td>@movie.Price.ToString("c")</td>
                     <td>
                         <NavLink class="btn btn-info btn-sm"

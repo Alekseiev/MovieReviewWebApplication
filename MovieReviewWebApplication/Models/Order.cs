@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MovieReviewWebApplication.Models
 {
@@ -18,7 +18,7 @@ namespace MovieReviewWebApplication.Models
         public string Line1 { get; set; }
         public string Line2 { get; set; }
         public string Line3 { get; set; }
-        
+
         [Required(ErrorMessage = "Please, enter a city name")]
         public string City { get; set; }
 
@@ -34,5 +34,5 @@ namespace MovieReviewWebApplication.Models
 
         [BindNever]
         public bool Shipped { get; set; }
-    }   
+    }
 }

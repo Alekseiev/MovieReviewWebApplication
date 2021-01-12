@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace MovieReviewWebApplication.Models
 {
@@ -19,7 +18,7 @@ namespace MovieReviewWebApplication.Models
                 .WithMany(t => t.Movies)
                 .UsingEntity(j =>
                 {
-                    j.ToTable("MovieGenres");                    
+                    j.ToTable("MovieGenres");
                 });
             base.OnModelCreating(modelBuilder);
         }

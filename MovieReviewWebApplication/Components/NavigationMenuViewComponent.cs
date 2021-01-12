@@ -6,9 +6,9 @@ namespace MovieReviewWebApplication.Components
 {
     public class NavigationMenuViewComponent : ViewComponent
     {
-        private IMovieRepository repository;
+        private IGenreRepository repository;
 
-        public NavigationMenuViewComponent(IMovieRepository repository)
+        public NavigationMenuViewComponent(IGenreRepository repository)
         {
             this.repository = repository;
         }
@@ -16,10 +16,9 @@ namespace MovieReviewWebApplication.Components
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategory = RouteData?.Values["category"];
-            return View(repository.Movies
-                .Select(movie => movie.Genre)
-                .Distinct()
-                .OrderBy(movie => movie));
+            return View(repository.Genres
+                .Select(genre => genre.Name)                
+                .ToList());
         }
     }
 }

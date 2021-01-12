@@ -20,6 +20,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Moq" Version="4.15.2" />
+    <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.20.0" />
   </ItemGroup>
 
   <ItemGroup>

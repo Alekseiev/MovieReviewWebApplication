@@ -1,31 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MovieReviewWebApplication.Models;
 using MovieReviewWebApplication.Models.ViewModels;
-
+using System;
+using System.Linq;
 
 namespace PracticeWebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private IMovieRepository repository;        
-        public int PageSize = 4;
+        private IMovieRepository movieRepository;
+        private IGenreRepository genreRepository;
+        public int PageSize = 8;
 
-        public HomeController(IMovieRepository repository)
+        public HomeController(IMovieRepository movieRepository, IGenreRepository genreRepository)
         {
-            this.repository = repository;            
+            this.movieRepository = movieRepository;
+            this.genreRepository = genreRepository;
         }
 
         public ViewResult Index(string category, int moviePage = 1)
         {
             return View(new MoviesListViewModel
             {
-                Movies = repository.Movies
-                .Where(movie => category == null || movie.Genre == category)
-                    .OrderBy(movie => movie.MovieId)
+                Movies = movieRepository.Movies
+                .Where(movie => category == null || movie.Genres.Select(genre => genre.Name).Contains(category))
+                .OrderBy(movie => movie.MovieId)
                     .Skip((moviePage - 1) * PageSize)
                     .Take(PageSize),
                 PagingInfo = new PagingInfo
@@ -33,11 +32,63 @@ namespace PracticeWebApplication.Controllers
                     CurrentPage = moviePage,
                     ItemsPerPage = PageSize,
                     TotalItems = category == null ?
-                        repository.Movies.Count() :
-                        repository.Movies.Where(movie =>
-                        movie.Genre == category).Count()
+                        movieRepository.Movies.Count() :
+                        movieRepository.Movies.Where(movie =>
+                        movie.Genres.Select(genre => genre.Name).Contains(category)).Count()
                 },
-                CurrentCategory = category
+                CurrentCategory = category,
+                MovieImages = movieRepository.Movies
+                .OrderBy(m => m.CreatedDate)
+                .Select(m => m.ImageName)
+                .Take(12)
+            });
+        }
+
+        public ViewResult Search(string searchString = "", int moviePage = 1)
+        {
+            return View("Index", new MoviesListViewModel
+            {
+                Movies = movieRepository.Movies
+                .Where(movie => movie.Name.Contains(searchString))
+                .OrderBy(movie => movie.MovieId)
+                    .Skip((moviePage - 1) * PageSize)
+                    .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = moviePage,
+                    ItemsPerPage = PageSize,
+                    TotalItems = movieRepository.Movies
+                        .Where(movie => movie.Name.Contains(searchString)).Count()
+                },
+                MovieImages = movieRepository.Movies
+                .OrderBy(m => m.CreatedDate)
+                .Select(m => m.ImageName)
+                .Take(12)
+            });
+        }
+
+        public ViewResult Genres(string category, int moviePage = 1)
+        {            
+            return View("Index", new MoviesListViewModel
+            {
+                Movies = movieRepository.Movies
+                .Where(movie => category == null || movie.Genres.Select(genre => genre.Name).Contains(category))
+                .OrderBy(movie => movie.MovieId)                    
+                    .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = moviePage,
+                    ItemsPerPage = PageSize,
+                    TotalItems = category == null ?
+                        movieRepository.Movies.Count() :
+                        movieRepository.Movies.Where(movie =>
+                        movie.Genres.Select(genre => genre.Name).Contains(category)).Count()
+                },
+                CurrentCategory = category,
+                MovieImages = movieRepository.Movies
+                .OrderBy(m => m.CreatedDate)
+                .Select(m => m.ImageName)
+                .Take(12)
             });
         }
     }

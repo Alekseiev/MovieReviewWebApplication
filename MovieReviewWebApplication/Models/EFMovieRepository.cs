@@ -23,7 +23,7 @@ namespace MovieReviewWebApplication.Models
 
         public void DeleteMovie(Movie movie)
         {
-            context.Movies.Remove(movie);            
+            context.Movies.Remove(movie);
             context.SaveChanges();
         }
 

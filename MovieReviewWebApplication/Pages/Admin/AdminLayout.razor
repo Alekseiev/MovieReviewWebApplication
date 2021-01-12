@@ -1,35 +1,41 @@
 ﻿@inherits LayoutComponentBase
 
-    <div class="bg-info text-white p-2">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col">
-                    <span class="navbar-brand ml-2">MOVIE REVIEW Administration</span>
-                </div>
-                <div class="col-2 text-right mt-1">
-                    <a class="btn btn-sm btn-primary" href="/account/logout">Log Out</a>
+    <head>
+        <link rel="stylesheet" href="~/lib/css/style.css" />
+    </head>
+
+    <div class="container">
+        <div class="bg-info text-white p-2">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <span class="navbar-brand ml-2">MOVIE REVIEW Administration</span>
+                    </div>
+                    <div class="col-2 text-right mt-1">
+                        <a class="btn btn-sm btn-primary" href="/account/logout">Log Out</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row p-2">
-            <div class="col-3">
-                <NavLink class="btn btn-outline-primary btn-block"
-                         href="/admin/movies"
-                         ActiveClass="btn-primary text-white"
-                         Match="NavLinkMatch.Prefix" >
-                    Movies
-                </NavLink>
-                <NavLink class="btn btn-outline-primary btn-block"
-                         href="/admin/orders"
-                         ActiveClass="btn-primary text-white"
-                         Match="NavLinkMatch.Prefix">
-                    Orders
-                </NavLink>
-            </div>
-            <div class="col">
-                @Body
+        <div class="container-fluid">
+            <div class="row p-2">
+                <div class="col-3">
+                    <NavLink class="btn btn-outline-primary btn-block"
+                             href="/admin/movies"
+                             ActiveClass="btn-primary text-white"
+                             Match="NavLinkMatch.Prefix">
+                        Movies
+                    </NavLink>
+                    <NavLink class="btn btn-outline-primary btn-block"
+                             href="/admin/orders"
+                             ActiveClass="btn-primary text-white"
+                             Match="NavLinkMatch.Prefix">
+                        Orders
+                    </NavLink>
+                </div>
+                <div class="col">
+                    @Body
+                </div>
             </div>
         </div>
     </div>

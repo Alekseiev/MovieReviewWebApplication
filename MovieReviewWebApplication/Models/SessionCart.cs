@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using MovieReviewWebApplication.Infrastructure;
+using System;
+using System.Text.Json.Serialization;
 
 namespace MovieReviewWebApplication.Models
 {

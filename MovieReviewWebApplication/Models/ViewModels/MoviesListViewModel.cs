@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MovieReviewWebApplication.Models;
+﻿using System.Collections.Generic;
 
 namespace MovieReviewWebApplication.Models.ViewModels
 {
@@ -10,6 +6,7 @@ namespace MovieReviewWebApplication.Models.ViewModels
     {
         public IEnumerable<Movie> Movies { get; set; }
         public PagingInfo PagingInfo { get; set; }
-        public string CurrentCategory { get; set; }        
+        public string CurrentCategory { get; set; }
+        public IEnumerable<string> MovieImages { get; set; }
     }
 }

@@ -1,28 +1,60 @@
-﻿@model Movie 
+﻿@model Movie
 
-<div class="card card-outline-primary m-1 p-1">
-    <div class="bg-faded p-1">
-        <h4>
-            @Model.Name
-            <span style="float:right">
-                <small>@Model.Price.ToString("c")</small>
-            </span>
-        </h4>
+<div class="movie_container">
+    <div class="movie_container_top">
+        <div class="movie_container_top_title">
+            <form id="@Model.MovieId" asp-page="/Cart" method="post">
+                <input type="hidden" asp-for="MovieId" />
+                <input type="hidden" name="returnUrl"
+                       value="@ViewContext.HttpContext.Request.PathAndQuary()" />
+                <h3>
+                    @Model.Name
+                    <button type="submit"
+                            class="btn btn-success btn-sm pull-right m-1" style="float:right">
+                        Add To Cart
+                    </button>
+                    <span style="float:right">
+                        <small>@Model.Price.ToString("c")</small>
+                    </span>
+                </h3>
+            </form>
+        </div>
     </div>
-    <form id="@Model.MovieId" asp-page="/Cart" method="post">
-        <input type="hidden" asp-for="MovieId" />
-        <input type="hidden" name="returnUrl"
-               value="@ViewContext.HttpContext.Request.PathAndQuary()" />
-        <span class="card-text p-1">
-            @Model.Description
-            @foreach (var genre in Model.Genres)
-            {
-                <span>@genre.Name</span>
-            }
-            <button type="submit"
-                    class="btn btn-success btn-sm pull-right" style="float:right">
-                Add To Cart
-            </button>
-        </span>
-    </form>
+    <div class="movie_container_bottom">
+        <div class="movie_container_bottom_image col-3">
+            <img src="~/assets/images/@Model.ImageName">
+        </div>
+        <div class="movie_container_bottom_rigth col-9">
+            <div class="movie_container_bottom_rigth_attributes">
+                <div class="release_date">
+                    <span class="release_date_title">Release date: </span>
+                    <span class="release_date_value">@Model.Year.Year</span>
+                </div>
+                <div class="country">
+                    <span class="country_title">Country: </span>
+                    <span class="country_value">@Model.Country</span>
+                </div>
+                <div class="genre">
+                    <form asp-controller="Home" asp-action="Genres">                        
+                        <div class="genre_value">
+                            Genre:
+                            @foreach (var genre in Model.Genres)
+                            {
+                                <input class="genre_value_container" type="submit" name="category" value="@genre.Name">
+                            }
+                        </div>
+                    </form>
+                </div>
+                <div class="director">
+                    <span class="director_title">Director: </span>
+                    <span class="director_value">@Model.Director</span>
+                </div>
+            </div>
+            <div class="movie_container_bottom_rigth_shortDesription">
+                <p>
+                    @Model.Description
+                </p>
+            </div>
+        </div>
+    </div>
 </div>

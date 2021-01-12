@@ -10,8 +10,8 @@ using MovieReviewWebApplication.Models;
 namespace MovieReviewWebApplication.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20201221162053_Orders")]
-    partial class Orders
+    [Migration("20210104163736_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,22 @@ namespace MovieReviewWebApplication.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
+
+            modelBuilder.Entity("GenreMovie", b =>
+                {
+                    b.Property<long>("GenresId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MoviesMovieId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("GenresId", "MoviesMovieId");
+
+                    b.HasIndex("MoviesMovieId");
+
+                    b.ToTable("MovieGenres");
+                });
 
             modelBuilder.Entity("MovieReviewWebApplication.Models.CartLine", b =>
                 {
@@ -46,6 +61,24 @@ namespace MovieReviewWebApplication.Migrations
                     b.ToTable("CartLine");
                 });
 
+            modelBuilder.Entity("MovieReviewWebApplication.Models.Genre", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("MovieReviewWebApplication.Models.Movie", b =>
                 {
                     b.Property<long>("MovieId")
@@ -53,17 +86,36 @@ namespace MovieReviewWebApplication.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Genre")
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Director")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(8,2)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Year")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("MovieId");
 
@@ -102,6 +154,9 @@ namespace MovieReviewWebApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Shipped")
+                        .HasColumnType("bit");
+
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -112,6 +167,21 @@ namespace MovieReviewWebApplication.Migrations
                     b.HasKey("OrderId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("GenreMovie", b =>
+                {
+                    b.HasOne("MovieReviewWebApplication.Models.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieReviewWebApplication.Models.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesMovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MovieReviewWebApplication.Models.CartLine", b =>

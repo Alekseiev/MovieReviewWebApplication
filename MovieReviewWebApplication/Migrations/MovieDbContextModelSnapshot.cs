@@ -66,6 +66,9 @@ namespace MovieReviewWebApplication.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -81,12 +84,22 @@ namespace MovieReviewWebApplication.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("Director")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -95,6 +108,12 @@ namespace MovieReviewWebApplication.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(8,2)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Year")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("MovieId");
 

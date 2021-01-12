@@ -4,12 +4,32 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>MovieReview</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/css/style.css" />
 </head>
+
 <body>
-    <div class="bg-dark text-white p-2">
-        <span class="navbar-brand ml-2">MOVIE REVIEW</span>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#272727">
+        <div class="container">
+            <a href="/Page1" class="navbar-brand">MOVIE REVIEW</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent"
+                    aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav mr-auto mb-3 mb-lg-0">
+                </ul>
+                <form asp-controller="Home" asp-action="Search" class="d-flex">
+                    <input type="search" placeholder="Search" name="searchString" class="form-control ml-2">
+                    <button type="submit" class="btn btn-outline-dark">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
     <div class="m-1 p-1">
         @RenderBody()
     </div>

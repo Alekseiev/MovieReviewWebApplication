@@ -1,44 +1,79 @@
 ﻿@model Order
+@{ Layout = null; }
 
-    <h2>Check out now</h2>
-    <p>Please, enter your details, and we'll ship your goods right away!</p>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MovieReview</title>
 
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/css/style.css" />
+</head>
 
-    <form asp-action="Checkout" method="post">
-        <h3>Ship to</h3>
-        <div class="form-group">
-            <label>Name:</label><input asp-for="Name" class="form-control" />
+<div class="container">
+
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#272727">
+        <div class="container">
+            <a href="/Page1" class="navbar-brand">MOVIE REVIEW</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent"
+                    aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav mr-auto mb-3 mb-lg-0">
+                </ul>
+                <form asp-controller="Home" asp-action="Search" class="d-flex">
+                    <input type="search" placeholder="Search" name="searchString" class="form-control ml-2">
+                    <button type="submit" class="btn btn-outline-dark">Search</button>
+                </form>
+            </div>
         </div>
-        <h3>Address</h3>
-        <div class="form-group">
-            <label>Line1:</label><input asp-for="Line1" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Line2:</label><input asp-for="Line2" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Line3:</label><input asp-for="Line3" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>City:</label><input asp-for="City" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>State:</label><input asp-for="State" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Zip:</label><input asp-for="Zip" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Country:</label><input asp-for="Country" class="form-control" />
-        </div>
-        <h3>Options</h3>
-        <div class="checkbox">
-            <label>
-                <input asp-for="GiftWrap" /> Gift wrap these items
-            </label>
-        </div>
-        <div class="text-center">
-            <input type="submit" value="Complete order" class="btn btn-primary" />
-        </div>
-    </form>
+    </nav>
+
+    <div class="col-8">
+        <h2>Check out now</h2>
+        <p>Please, enter your details, and we'll ship your goods right away!</p>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <form asp-action="Checkout" method="post">
+            <h3>Ship to</h3>
+            <div class="form-group">
+                <label>Name:</label><input asp-for="Name" class="form-control" />
+            </div>
+            <h3>Address</h3>
+            <div class="form-group">
+                <label>Line1:</label><input asp-for="Line1" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Line2:</label><input asp-for="Line2" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Line3:</label><input asp-for="Line3" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>City:</label><input asp-for="City" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>State:</label><input asp-for="State" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Zip:</label><input asp-for="Zip" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Country:</label><input asp-for="Country" class="form-control" />
+            </div>
+            <h3>Options</h3>
+            <div class="checkbox">
+                <label>
+                    <input asp-for="GiftWrap" /> Gift wrap these items
+                </label>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Complete order" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
